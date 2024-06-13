@@ -16,7 +16,7 @@ for (isp in 1:nrow(table)) {
   species <- table[isp,]
   print(species)
 
-  lengthWeightData <- svdbs::get_length_weight(channel,year=1992:2020, species=species$SVSPPsv)
+  lengthWeightData <- survdat::get_length_weight_data(channel,year=1992:2020, species=species$SVSPPsv)
 
   fits <- fit_length_weight(lengthWeightData$data,speciesName=species$COMNAME,outputDir,logfile = "logfile.txt",
                             sex="all",
