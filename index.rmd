@@ -1,0 +1,47 @@
+---
+title: "Length-Weight Relationships for 74 fish Species"
+author: "Andy Beet"
+date: "`r format(Sys.Date(), '%e %B %Y')`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+    - bibliography/lengthweight.bib
+biblio-style: apalike
+csl: plos.csl
+always_allow_html: true
+link-citations: true
+github-repo: andybeet/lengthweight
+url: https://andybeet.github.io/lengthweight
+description: "Length-Weight Relationships for 74 fish species collected during NEFSC research vessel bottom trawl surveys (1992 - present)"
+---
+
+# Introduction {-}
+
+The purpose of this book is to update the NOAA Tech memo NMFS-NE-171 @wigley_length-weight_2003 for all 74 species included in the original paper. This update will include data from 1992 through present day. We will also explain the methods used to fit the models and how to correctly predict the length from weight using the fitted models.
+
+Since the data used to predict the length-weight relationships spans 30+ years it is assumed that this underlying relationship has not changed over time. This assumption has been questioned for some species. It has been said that some species have been found to be getting smaller, in weight, for a given length as time passes. This will not be captured in this analysis.
+
+```{r setup, echo=FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = F,
+                      message = F,
+                      warning = F)
+library(sf)
+library(here)
+library(lengthweight)
+library(ggplot2)
+library(DT)
+
+```
+
+## Region of study
+
+```{r study region, message = FALSE, warning=FALSE, fig.align='center',out.width="75%", echo = F, fig.cap='NEFSC Bottom Trawl survey sampling strata'}
+
+NEFSCspatial::BTS_Strata |> 
+  dplyr::select(STRATA,X,Y,geometry) |>  
+  ggplot2::ggplot() +
+  ggplot2::geom_sf()
+
+```
+
+
