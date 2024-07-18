@@ -18,11 +18,8 @@ Imports:
     equatiomatic,
     ggplot2,
     here,
-    NEFSCspatial,
     sf,
     tidyr
-Remotes:
-    NEFSC/NEFSC-Spatial
 Depends: 
     R (>= 2.10)
 LazyData: true
