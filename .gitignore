@@ -12,3 +12,10 @@ output2
 docs
 _book
 _bookdown_files
+chapters
+lengthweight_files
+
+
+data-raw/data
+# exceptions
+!/data-raw/data/lwAllData.rds
