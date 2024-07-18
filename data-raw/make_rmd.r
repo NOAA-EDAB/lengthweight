@@ -11,6 +11,11 @@ make_rmd <- function(speciesName){
 
   filename <- gsub("\\s+","",speciesName)
 
+  # check to see if chapters folder exists
+  if(!dir.exists(here::here("chapters"))){
+    dir.create(here::here("chapters"))
+  }
+
   # create rmd with name of indicator
   con <- file(here::here("chapters",paste0(filename,".rmd")),open="w")
 
