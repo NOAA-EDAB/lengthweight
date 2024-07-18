@@ -15,6 +15,7 @@ url: https://andybeet.github.io/lengthweight
 description: "Length-Weight Relationships for 74 fish species collected during NEFSC research vessel bottom trawl surveys (1992 - present)"
 ---
 
+
 # Introduction {-}
 
 The purpose of this book is to update the NOAA Tech memo NMFS-NE-171 @wigley_length-weight_2003 for all 74 species included in the original paper. This update will include data from 1992 through present day. We will also explain the methods used to fit the models and how to correctly predict the length from weight using the fitted models.
@@ -35,7 +36,9 @@ library(DT)
 
 ## Region of study
 
-```{r study region, message = FALSE, warning=FALSE, fig.align='center',out.width="75%", echo = F, fig.cap='NEFSC Bottom Trawl survey sampling strata'}
+(ref:map) NEFSC Bottom Trawl survey sampling strata
+
+```{r studyregion, message = FALSE, warning=FALSE, fig.align='center',out.width="100%", echo = F, fig.cap='(ref:map)'}
 
 NEFSCspatial::BTS_Strata |> 
   dplyr::select(STRATA,X,Y,geometry) |>  
@@ -43,5 +46,4 @@ NEFSCspatial::BTS_Strata |>
   ggplot2::geom_sf()
 
 ```
-
 
