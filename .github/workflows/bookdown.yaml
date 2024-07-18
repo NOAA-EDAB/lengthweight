@@ -45,7 +45,7 @@ jobs:
 
 
       - name: Build book
-        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
+        run: Rscript -e 'bookdown::render_book("index.rmd", quiet = TRUE)'
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
