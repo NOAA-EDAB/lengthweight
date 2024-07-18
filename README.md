@@ -11,9 +11,9 @@
 
 An update of the NOAA Tech memo NMFS-NE-171: 
 
-* Wigley S. [Length-Weight Relationships for 74 Fish Species Collected during NEFSC Research Vessel Bottom Trawl Surveys](https://repository.library.noaa.gov/view/noaa/3346), 1992-99. 2003; 36.
+* Wigley SE, McBride HM, McHugh NJ. Length-weight relationships for 74 fish species collected during NEFSC research vessel bottom trawl surveys, 1992-99. 2003; [Available]( https://repository.library.noaa.gov/view/noaa/3346)
 
-Please visit the online [book](https://andybeet.github.io/lengthweight/) to learn more
+Please visit the online [book](https://noaa-edab.github.io/lengthweight/) to learn more
 
 ## Contact
 
