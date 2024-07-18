@@ -30,6 +30,13 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
 
+      - name: create rmds, data sets
+        run: |
+          source(here::here("data-raw/build_all_rmds"))
+          params <- build_all_rmds()
+        shell: Rscript {0}
+
+
       - name: Build book
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
 
