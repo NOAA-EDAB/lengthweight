@@ -34,7 +34,7 @@ jobs:
         run: |
           install.packages("remotes")
           remotes::install_github("NEFSC/NEFSC-Spatial")
-          source(here::here("data-raw/build_all_rmds"))
+          source(here::here("data-raw/build_all_rmds.r"))
           params <- build_all_rmds()
         shell: Rscript {0}
 
