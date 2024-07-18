@@ -56,7 +56,7 @@ fit_length_weight <- function(lengthWeightData,speciesName,sex=NULL,season=NULL)
   evar <- sum(fit$residuals^2)/fit$df.residual
   lwd$predWt <- exp(fit$fitted.values + evar/2)
 
-  if(dim(n)[1] > 1){
+  if(nrow(n) > 1){
     # fit seasonal effect
     fit2 <- lm(log(INDWT) ~ log(LENGTH):SEASON, data=lwd )
     evar <- sum(fit2$residuals^2)/fit2$df.residual
@@ -79,19 +79,6 @@ fit_length_weight <- function(lengthWeightData,speciesName,sex=NULL,season=NULL)
 
   # plots common slope fit and separate seasonal fits on facet plot
   nSeasons <- length(season)
-  # figText <- data.frame(SEASON = sort(unique(lwd$SEASON)),
-  #                       x = c(rep(min(lwd$LENGTH),nSeasons)),
-  #                       y = c(rep(max(lwd$INDWT),nSeasons)),
-  #                       text = c(rep(paste0("Common slope: W = ",signif(exp(fit$coefficients[1]),6),"L^",signif(fit$coefficients[2],6)),nSeasons)),
-  #                       textSeas = c(paste0("Seasonal slope: W = ",signif(exp(fit2$coefficients[1]),6),"L^",signif(fit2$coefficients[2:(nSeasons+1)],6))),
-  #                       n = n )
-
-  #print(figText)
-  # figText <- figText  |>
-  #   dplyr::mutate_if(is.factor, as.character)
-  # figText$SEASON <- as.factor(figText$SEASON)
-
-  #   png(paste0(outputDir,"/length_weight_relationship_",speciesName,".png"),width = 600,height = 600,units="px")
 
   p <- ggplot2::ggplot(data = lwd,ggplot2::aes(x=LENGTH, y = INDWT, color = as.factor(SEX))) +
     ggplot2::geom_point(shape = 1) +
@@ -104,25 +91,9 @@ fit_length_weight <- function(lengthWeightData,speciesName,sex=NULL,season=NULL)
     p <- p + ggplot2::geom_line(ggplot2::aes(y = predSeasWt),color = "blue")
   }
     p <- p + ggplot2::xlab("Length (cm)") +
-    ggplot2::ylab("Weight (kg)") +
-    ggplot2::ggtitle(paste0("Length-weight (SVDBS) relationship for ",speciesName))
-    # ggplot2::geom_text(data = figText,ggplot2::aes(x=x,y=y,label = text ),show.legend = F,size=3,color="black",hjust="inward") +
-    # ggplot2::geom_text(data = figText,ggplot2::aes(x=x,y=.9*y,label = textSeas ),show.legend = F,size=3,color="black",hjust="inward")
-
-  # if (any(colnames(n)==0))      {
-  #  p <- p+ ggplot2::geom_text(data = figText,ggplot2::aes(x=x,y=.8*y,label = paste("n_0 = ", n.0 )),show.legend = F,size=3,color="black",hjust="inward")
-  # }
-  #
-  # if (any(colnames(n)==1))  {
-  #   p <- p +
-  #   ggplot2::geom_text(data = figText,ggplot2::aes(x=x,y=.78*y,label = paste("n_1 = ", n.1 )),show.legend = F,size=3,color="black",hjust="inward")
-  # }
-  #
-  # if(any(colnames(n)==2)) {
-  #   p <- p +
-  #     ggplot2::geom_text(data = figText,ggplot2::aes(x=x,y=.76*y,label = paste("n_2 = ", n.2 )),show.legend = F,size=3,color="black",hjust="inward")
-  #
-  # }
+    ggplot2::ylab("Weight (kg)")
+    # +
+    # ggplot2::ggtitle(paste0("Length-weight (SVDBS) relationship for ",speciesName))
 
 
   return(list(plot=p,nObs=n,commonSlope=fit,seasonSlope=fit2,pval=pVal))
