@@ -27,11 +27,9 @@ make_rmd <- function(speciesName){
   # cat(paste0("---"),append=T,fill=T,file=con)
 
   cat(paste0("# ",speciesName, "{#",filename,"}"),append=T,fill=T,file=con)
-
-
-  #
-  # cat(paste0("# ",speciesName," {#",filename,"}"),append=T,fill=T,file=con)
   cat("",append=T,fill=T,file=con) # add space
+
+
 
   # header chunk script
   cat("```{r ",paste0("readdata",filename),",echo=FALSE}",append=T,fill=T,file=con)
@@ -45,8 +43,9 @@ make_rmd <- function(speciesName){
   cat("",append=T,fill=T,file=con)
 
   # fit chunk script
-  cat("```{r ",paste0("fit",filename),",echo=FALSE}",append=T,fill=T,file=con)
-  cat(paste0("fits <- fit_length_weight(lengthWeightData,speciesName='",speciesName,"',sex=NULL,season=c('FALL','SPRING'))"),append=T,fill=T,file=con) # add space
+#  cat("```{r ",paste0("fit",filename),", echo=FALSE, fig.cap='Red solid line = Common fit, Blue solid line = Seasonal fit'}",append=T,fill=T,file=con)
+  cat("```{r ",paste0("fit",filename),", echo=FALSE}",append=T,fill=T,file=con)
+  cat(paste0("fits <- fit_length_weight(lengthWeightData,speciesName='",speciesName,"',sex=NULL,season=NULL)"),append=T,fill=T,file=con) # add space
   cat("print(fits$plot)",append=T,fill=T,file=con)
   cat("```",append=T,fill=T,file=con)
 
@@ -72,10 +71,10 @@ make_rmd <- function(speciesName){
   cat("```{r ",paste0("commonparams",filename),",echo=FALSE}",append=T,fill=T,file=con)
   cat("estimates <- as.data.frame(fits$commonSlope$coefficients)",append=T,fill=T,file=con) # add space
   cat("names(estimates) <- 'Estimates'",append=T,fill=T,file=con) # add space
-  cat("residualVariance <- summary(fits$commonSlope)$sigma**2",append=T,fill=T,file=con) # add space
-  cat("estimates <- rbind(estimates,residualVariance)",append=T,fill=T,file=con) # add space
+  cat("sd <- summary(fits$commonSlope)$sigma",append=T,fill=T,file=con) # add space
+  cat("estimates <- rbind(estimates,sd)",append=T,fill=T,file=con) # add space
   cat("ind <- nrow(estimates)",append=T,fill=T,file=con) # add space
-  cat("rownames(estimates)[ind] <- 'residual variance'",append=T,fill=T,file=con) # add space
+  cat("rownames(estimates)[ind] <- 'sigma'",append=T,fill=T,file=con) # add space
   cat("DT::datatable(estimates)",append=T,fill=T,file=con) # add space
   cat("",append=T,fill=T,file=con)
   cat("```",append=T,fill=T,file=con)
@@ -98,10 +97,10 @@ make_rmd <- function(speciesName){
   cat("estimates <- as.data.frame(fits$seasonSlope$coefficients)",append=T,fill=T,file=con) # add space
   cat("if(!all(is.na(estimates))) {",append=T,fill=T,file=con)
   cat(" names(estimates) <- 'Estimates'",append=T,fill=T,file=con) # add space
-  cat(" residualVariance <- summary(fits$seasonSlope)$sigma**2",append=T,fill=T,file=con) # add space
-  cat(" estimates <- rbind(estimates,residualVariance)",append=T,fill=T,file=con) # add space
+  cat(" sd <- summary(fits$seasonSlope)$sigma",append=T,fill=T,file=con) # add space
+  cat(" estimates <- rbind(estimates,sd)",append=T,fill=T,file=con) # add space
   cat(" ind <- nrow(estimates)",append=T,fill=T,file=con) # add space
-  cat(" rownames(estimates)[ind] <- 'residual variance'",append=T,fill=T,file=con) # add space
+  cat(" rownames(estimates)[ind] <- 'sigma'",append=T,fill=T,file=con) # add space
   cat("DT::datatable(estimates)",append=T,fill=T,file=con) # add space
   cat("}",append=T,fill=T,file=con) # add space
   cat("",append=T,fill=T,file=con)
@@ -112,11 +111,15 @@ make_rmd <- function(speciesName){
 
 
   # table of parameter and pvalue
+  # Header for seasonal slope
+#   cat("## Hypothesis tests",append=T,fill=T,file=con)
+#   cat("",append=T,fill=T,file=con)
+#   cat("We can test the Null hypothesis, $H_{0}:\\beta_{j}=\\beta_{1}$\n",append=T,fill=T,file=con)
+#   cat("This tests the significance of a seasonal relationship (in contrast to a common relationship, regardless of season)
+# ",append=T,fill=T,file=con)
+#   cat(paste0("The p-value = ",round(fits$pval,digits = 3)),append=T,fill=T,file=con)
 
-  cat("```{r ",paste0("pval",filename),",echo=FALSE}",append=T,fill=T,file=con)
-  cat("",append=T,fill=T,file=con) # add space
   cat("",append=T,fill=T,file=con)
-  cat("```",append=T,fill=T,file=con)
 
 
 
