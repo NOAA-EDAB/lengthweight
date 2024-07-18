@@ -1,0 +1,24 @@
+# Table of parameter estimates
+
+## Common slope
+
+Length and weight data are pooled over sex and season
+```{r paramEst, echo = F}
+tab <- readRDS(here::here("data-raw/data/params.rds"))
+tab <- tab |> 
+  dplyr::mutate(`Common Name` = paste0('<a href = "',gsub("\\s+","",`Common Name`),'.html">',`Common Name`,'</a>'))
+DT::datatable(tab,
+              extensions = 'Buttons', 
+              options = list(dom = 'Bfrtip',
+                             buttons = list(list(extend = 'csv',filename = "lengthWeightRelationships"),
+                                            list(extend = 'excel',filename = "lengthWeightRelationships"),
+                                            list(extend = 'pdf',filename = "lengthWeightRelationships"),
+                                            'copy', 'print'),
+                             pageLength = 100, 
+                             autoWidth = TRUE),
+              escape=FALSE)
+
+```
+
+## Seasonal slope
+

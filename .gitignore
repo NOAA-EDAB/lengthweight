@@ -8,14 +8,14 @@
 # folders
 other
 output
-output2
 docs
 _book
 _bookdown_files
 chapters
+!/chapters/headers
 lengthweight_files
-
 
 data-raw/data
 # exceptions
 !/data-raw/data/lwAllData.rds
+

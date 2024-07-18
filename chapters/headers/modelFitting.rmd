@@ -1,0 +1,69 @@
+# Models
+
+The underlying model takes the form:
+
+$$ W_{i} = \alpha L_{i}^{\beta}e^{z_{i}}$$
+
+where $\alpha$ and $\beta$ are intercept and slope parameters (on log scale), $L_{i}$, $W_{i}$ are the length and weight, repectively, of individual *i*, and
+$z_{i} \sim N(\mu,\sigma^2)$
+
+This model assumes log normal observational error (normal/gaussian on the log scale). This is important when the fitted model is used to [predict](#predict) weights from length
+
+This model can be extended to :
+
+$$ W_{ji} = \alpha L_{ji} ^ {\beta_j} e^{z_i} $$
+for season j, j= 1, ..., 4 (spring, summer, fall, winter) or sex j, j = 1, ..., 3 (0, 1, 2) or extended further to include season:sex combinations. These models are all nested and can therefore be tested using standard statistical methods. 
+
+
+## Relationship between Normal and Log Normal distribution
+
+If 
+
+$$Z \sim ~ LN(\mu, \sigma^2)$$
+then 
+
+$$ln(Z) \sim N(\mu,\sigma^2)$$
+
+Note that each distribution uses the same parameters but their interpretations are different. For example the interpretation of $\mu$ and $\sigma^2$, under the normal distribution, are mean and variance: 
+
+$$E(ln(Z)) = \mu$$
+$$Var(ln(Z)) = \sigma^2$$
+
+but under the log normal distibution the mean and variance are:
+
+$$E(Z) = e^{\mu + \frac{\sigma^2}{2}}$$
+$$Var(Z) = (e^{\sigma^2} - 1)(e ^{2\mu + \sigma^2})$$
+
+This is important when [predicting](#predict) weight from length.
+
+## Fitting
+
+For this type of model it is natural to take logs and fit using ordinary least squares, since $z_{i} \sim N(\mu,\sigma^2)$ 
+
+$$ ln(W_i) = ln(\alpha) + \beta ln(L_i) + z_i$$
+where $ln(W_i)$ is regressed on $ln(L_i)$ to estimate $\ln(a)$, $\beta$, and $\sigma^2$ 
+
+## Prediction {#predict}
+
+Now to estimate Weight using this fitted model
+
+$$
+\begin{aligned}
+E(W_{i}) &= \hat{W_i} \\
+&= E({aL_i^\beta}e^{Z_{i}}) \\
+&= E({aL_i^\beta}) E(e^{Z_{i}}) \\
+&= {aL_i^\beta}e^{\sigma^2/2} \\
+&= e^{ln(a) + \beta ln(L_i)}e^{\sigma^2/2} \\
+&= e^{a + \beta ln(L_i) + \sigma^2/2}
+\end{aligned}
+$$
+
+It is common, although incorrect, to see
+
+
+$$\hat{W_i} = e^{a + \beta ln(L_i)}$$
+omitting the term $\sigma^2/2$.
+
+By omitting this term the resulting fitted value of weight will be biased toward smaller (in weight) individuals. 
+
+
