@@ -3,6 +3,13 @@
 ## Common slope
 
 Length and weight data are pooled over sex and season
+
+Model fit: 
+
+$$ W_{i} = \alpha L_{i} ^ {\beta} e^{z_i} $$
+Where $i$ is the individual fish and $z_{i} \sim N(0,\sigma^2)$
+
+
 ```{r paramEst, echo = F}
 tab <- readRDS(here::here("data-raw/data/params.rds"))
 tab <- tab |> 
@@ -22,3 +29,34 @@ DT::datatable(tab,
 
 ## Seasonal slope
 
+Length and weight data are pooled over sex. Constrained to have the same intercept and common error structure.
+Model fit:
+
+$$ W_{ji} = \alpha L_{ji} ^ {\beta_j} e^{z_i} $$
+where $j$ is the season and $i$ is the individual fish. $z_{i} \sim N(0,\sigma^2)$
+
+```{r paramEstSeason, echo = F}
+tab <- readRDS(here::here("data-raw/data/paramsSeason.rds")) 
+tabColnames <- names(tab)
+tabColnames <- gsub("beta-","",tabColnames)
+colnames(tab) <- tabColnames
+
+tab2 <- tidyr::pivot_longer(tab,cols = c("Fall","Spring","Summer","Winter"),
+               names_to = "SEASON",
+               values_to = "beta") |> 
+  dplyr::relocate(sigma, .after = beta) 
+
+tab2 <- tab2 |> 
+  dplyr::mutate(`Common Name` = paste0('<a href = "',gsub("\\s+","",`Common Name`),'.html">',`Common Name`,'</a>'))
+DT::datatable(tab2,
+              extensions = 'Buttons', 
+              options = list(dom = 'Bfrtip',
+                             buttons = list(list(extend = 'csv',filename = "lengthWeightRelationships"),
+                                            list(extend = 'excel',filename = "lengthWeightRelationships"),
+                                            list(extend = 'pdf',filename = "lengthWeightRelationships"),
+                                            'copy', 'print'),
+                             pageLength = 100, 
+                             autoWidth = TRUE),
+              escape=FALSE)
+
+```
